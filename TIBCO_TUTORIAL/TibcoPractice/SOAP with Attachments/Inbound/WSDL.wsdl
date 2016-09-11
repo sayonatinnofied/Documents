@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://ws-i.org/profiles/basic/1.1/xsd" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/TibcoPractice/DEMOSOAP/Schema.xsd" xmlns:ns3="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:tns="http://xmlns.example.com/1442651170079" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/1442651170079">
+    <import namespace="http://www.tibco.com/schemas/TibcoPractice/DEMOSOAP/Schema.xsd"/>
+    <import namespace="http://ws-i.org/profiles/basic/1.1/xsd"/>
+    <message name="inputMsg">
+        <part name="filename" type="xsd:string"/>
+    </message>
+    <message name="outputMsg">
+        <part name="attachment" type="ns2:swaRef"/>
+    </message>
+    <portType name="swaPort">
+        <operation name="SwAOperation">
+            <input message="tns:inputMsg"/>
+            <output message="tns:outputMsg"/>
+        </operation>
+    </portType>
+</definitions>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://xmlns.tibco.com/encodings/mime" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns="http://www.tibco.com/schemas/TibcoPractice/DEMOSOAP/Schema.xsd" xmlns:ns3="http://www.tibco.com/schemas/TibcoPractice/SOAP with Attachments/Outbound/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://xmlns.example.com/1442916159083" xmlns:pfx4="http://xmlns.example.com/1442560464240" xmlns:pfx3="http://www.example.com/interface/attachments" xmlns:pfx2="http://www.tibco.com/TNT/webservices/" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx="http://xmlns.example.com/1442651170079">
+    <wsdl:import namespace="http://xmlns.example.com/1442651170079" location="/SOAP with Attachments/Inbound/WSDL.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1442916159083" location="/SOAP with Attachments/Outbound/WSDL.wsdl"/>
+    <pd:name>SOAP with Attachments/Outbound/SOAPService.process</pd:name>
+    <pd:startName>SOAPEventSource</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="SOAPEventSource">
+        <pd:type>com.tibco.plugin.soap.SOAPEventSource</pd:type>
+        <pd:resourceType>ae.activities.SOAPEventSourceUI</pd:resourceType>
+        <pd:x>151</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <service>pfx5:PortType</service>
+            <wsdlNamespaceRoot>http://xmlns.example.com/1442916159083/OutboundOperationImpl</wsdlNamespaceRoot>
+            <operation>OutboundOperation</operation>
+            <portAddressPrefix/>
+            <operationStyle>rpc</operationStyle>
+            <soapUse>literal</soapUse>
+            <inputNamespace>http://InputMessageNamespace</inputNamespace>
+            <outputNamespace>http://OutputMessageNamespace</outputNamespace>
+            <faultNamespace>http://FaultMessageNamespace</faultNamespace>
+            <embedWsdlComponents>true</embedWsdlComponents>
+            <embedSchemaComponents>true</embedSchemaComponents>
+            <soapAction>/DEMOSOAP/SOAPOutboundService</soapAction>
+            <sharedChannel>/HTTP/Shared Variables/Connections/HTTP Connection.sharedhttp</sharedChannel>
+            <soapVersion>SOAP 1.1</soapVersion>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <sharedChannels>
+                <httpChannel>
+                    <useBasicAuthentication>false</useBasicAuthentication>
+                </httpChannel>
+            </sharedChannels>
+            <inputAttachmentBindings/>
+            <outputAttachmentBindings/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>629</pd:endX>
+    <pd:endY>80</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1442825956824</pd:targetNamespace>
+    <pd:activity name="SOAPSendReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReplyUI</pd:resourceType>
+        <pd:x>469</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <eventSource>SOAPEventSource</eventSource>
+        </config>
+        <pd:inputBindings>
+            <OutboundOperationResponse>
+                <attachment>
+                    <ns3:partElement>
+                        <xsl:value-of select="1.1"/>
+                    </ns3:partElement>
+                </attachment>
+                <ns2:mimeEnvelopeElement>
+                    <mimePart>
+                        <mimeHeaders>
+                            <content-type>
+                                <xsl:value-of select="'image/gif'"/>
+                            </content-type>
+                        </mimeHeaders>
+                        <binaryContent>
+                            <xsl:value-of select="$Read-File/ns12:ReadActivityOutputBinaryClass/fileContent/binaryContent"/>
+                        </binaryContent>
+                    </mimePart>
+                </ns2:mimeEnvelopeElement>
+            </OutboundOperationResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>313</pd:x>
+        <pd:y>80</pd:y>
+        <config>
+            <encoding>binary</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns12:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/TibcoPractice/attachement_file_directory, '\',$SOAPEventSource/OutboundOperation/filename)"/>
+                </fileName>
+            </ns12:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>SOAPSendReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPEventSource</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>SOAPSendReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

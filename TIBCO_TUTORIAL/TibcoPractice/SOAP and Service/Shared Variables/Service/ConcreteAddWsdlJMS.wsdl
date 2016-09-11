@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:tns="http://xmlns.example.com/1439457877068" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.tibco.com/schemas/TibcoPractice/SOAP/Shared Variables/Schemas/Schema.xsd" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://xmlns.example.com/1439457877068">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/TibcoPractice/SOAP/Shared Variables/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/TibcoPractice/SOAP/Shared Variables/Schemas/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="a" type="xs:int"/>
+            <xs:element name="add">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:addRequest"/>
+                        <xs:element ref="ns0:addResponse"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:a"/>
+                        <xs:element ref="ns0:b"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="addResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:op"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="b" type="xs:int"/>
+            <xs:element name="op" type="xs:int"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="AddServiceOverJMS">
+        <wsdl:port name="AddPortEndpoint1" binding="tns:AddPortEndpoint1Binding">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://localhost:7222</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">queue.sample</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="AddPort">
+        <wsdl:operation name="add">
+            <wsdl:input message="tns:addRequest"/>
+            <wsdl:output message="tns:addRespone"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AddPortEndpoint1Binding" type="tns:AddPort">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="add">
+            <soap:operation style="document" soapAction="/SOAP%2520and%2520Service/Shared%2520Variables/Service/AddServiceOverJMS.serviceagent/AddPortEndpoint1/add"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="addRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="addResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="addRequest">
+        <wsdl:part name="addRequest" element="ns0:addRequest"/>
+    </wsdl:message>
+    <wsdl:message name="addRespone">
+        <wsdl:part name="addResponse" element="ns0:addResponse"/>
+    </wsdl:message>
+</wsdl:definitions>

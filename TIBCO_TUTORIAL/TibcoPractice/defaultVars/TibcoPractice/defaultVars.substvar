@@ -1,0 +1,133 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>Rollback</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1451369893874</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>SUBSET_SIZE</name>
+			<value>10</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1451370019251</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>attachement_file_directory</name>
+			<value>D:\TibcoPractice\HTTP\Shared Variables\attachment_files\input</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438757933880</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>attachment_output</name>
+			<value>D:\TibcoPractice\HTTP\Shared Variables\attachment_files\output\order.doc</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438927242070</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>create_approval_file</name>
+			<value>D:\TibcoPractice\File\Shared Variables\Schemas\BW_approve_order.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438681773895</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>customer_notification</name>
+			<value>D:\TibcoPractice\File\Shared Variables\Schemas\BW_customer_notification.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438682936877</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>ftp_get_file</name>
+			<value>D:\TibcoPractice\FTP\Shared Variables\ftp-file_get.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438690904118</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>ftp_put_file</name>
+			<value>D:\TibcoPractice\FTP\Shared Variables\ftp-file.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438690904165</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>mail_attach</name>
+			<value>D:\TibcoPractice\MAIL\Shared Variables\attachment_files\input\</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439377184825</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>new_order_file</name>
+			<value>D:\TibcoPractice\File\Shared Variables\Schemas\BW_new_order.xml</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438680848916</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>order_batch_file</name>
+			<value>D:\TibcoPractice\JDBC\Shared Variables\order.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439371656256</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>order_file</name>
+			<value>D:\TibcoPractice\JDBC\Shared Variables\order.xml</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439369401883</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>order_id</name>
+			<value>OD001</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439206804453</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>order_subset_file</name>
+			<value>D:\TibcoPractice\JDBC\Shared Variables\ordersubset.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439372019480</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>shipping_cost</name>
+			<value>D:\TibcoPractice\File\Shared Variables\Schemas\BW_shipping_costs.xml</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1438684372747</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>update_log</name>
+			<value>D:\TibcoPractice\JDBC\Shared Variables\orderupadate.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1439371848565</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

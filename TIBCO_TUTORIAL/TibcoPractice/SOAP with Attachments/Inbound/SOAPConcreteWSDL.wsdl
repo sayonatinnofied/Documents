@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:tns="http://xmlns.example.com/1442651170079/SwAOperationImpl/SOAP_sp_with_sp_Attachments/Inbound" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1442651170079/SwAOperationImpl/SOAP_sp_with_sp_Attachments/Inbound">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws-i.org/profiles/basic/1.1/xsd" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:simpleType name="swaRef">
+                <xsd:restriction base="xsd:anyURI"/>
+            </xsd:simpleType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:service name="SOAPService">
+        <wsdl:port name="SOAPEventSource" binding="tns:SOAPEventSourceBinding">
+            <soap:address location="http://localhost:8065/SOAP%20with%20Attachments/Inbound/SOAPService"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="swaPort">
+        <wsdl:operation name="SwAOperation">
+            <wsdl:input message="tns:inputMsg"/>
+            <wsdl:output message="tns:outputMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAPEventSourceBinding" type="tns:swaPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SwAOperation">
+            <soap:operation style="rpc" soapAction="/DEMOSOAP/SOAPSWAService"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://InputMessageNamespace" parts="filename"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://OutputMessageNamespace" parts="attachment"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="inputMsg">
+        <wsdl:part name="filename" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="outputMsg">
+        <wsdl:part name="attachment" type="ns0:swaRef"/>
+    </wsdl:message>
+</wsdl:definitions>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:ns="http://www.tibco.com/schemas/TibcoPractice/SOAP/Shared Variables/Schemas/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://xmlns.example.com/1439457877068" xmlns:pfx4="http://xmlns.example.com/1439452623019" xmlns:pfx3="http://xmlns.example.com/1439441186948" xmlns:pfx2="http://xmlns.example.com/unique/default/namespace/1134438639123" xmlns:pfx="http://xmlns.example.com/1134523930893" xmlns:pfx6="http://xmlns.example.com/1442560464240/addOperationImpl/SOAP/Main_sp_Process">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://xmlns.example.com/unique/default/namespace/1134438639123"/>
+    <wsdl:import namespace="http://xmlns.example.com/1134523930893"/>
+    <wsdl:import namespace="http://xmlns.example.com/1439441186948"/>
+    <wsdl:import namespace="http://xmlns.example.com/1439457877068" location="/SOAP/Shared Variables/Service/ConcreteAddWsdlJMS.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1442560464240/addOperationImpl/SOAP/Main_sp_Process" location="/SOAP/Service/SOAPWSDL.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1439452623019" location="/SOAP and Service/Shared Variables/Service/ConcreteAddWsdl.wsdl"/>
+    <pd:name>SOAP and Service/Main Process/TestService/addTest.process</pd:name>
+    <pd:startName>Timer</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="Timer">
+        <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
+        <pd:resourceType>ae.activities.timer</pd:resourceType>
+        <pd:x>118</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <StartTime>1439442135000</StartTime>
+            <Frequency>true</Frequency>
+            <TimeInterval>1</TimeInterval>
+            <FrequencyIndex>Second</FrequencyIndex>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>450</pd:endX>
+    <pd:endY>63</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1260955608774</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>274</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <service>pfx4:AddService</service>
+            <servicePort>AddPortEndpoint1</servicePort>
+            <operation>add</operation>
+            <soapAction>/SOAP%2520and%2520Service/Shared%2520Variables/Service/AddService.serviceagent/AddPortEndpoint1/add</soapAction>
+            <endpointURL>http://localhost:9090/SOAP%2520and%2520Service/Shared%2520Variables/Service/AddService.serviceagent/AddPortEndpoint1</endpointURL>
+            <timeoutType>Seconds</timeoutType>
+            <authScheme>NONE</authScheme>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <sharedChannels>
+                <jmsChannel>
+                    <NamingURL>tibjmsnaming://localhost:7222</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>admin</NamingPrincipal>
+                    <NamingCredential/>
+                    <ConnectionFactory>QueueConnectionFactory</ConnectionFactory>
+                    <JMSTo>queue.sample</JMSTo>
+                    <JMSMessageType>Bytes</JMSMessageType>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>0</JMSTimeToLive>
+                    <JMSUserName>admin</JMSUserName>
+                    <JMSPassword/>
+                </jmsChannel>
+            </sharedChannels>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns:addRequest>
+                    <ns:a>
+                        <xsl:value-of select="20"/>
+                    </ns:a>
+                    <ns:b>
+                        <xsl:value-of select="20"/>
+                    </ns:b>
+                </ns:addRequest>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Timer</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

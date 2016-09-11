@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/schemas/TibcoPractice/SOAP/Shared Variables/Schemas/Schema.xsd" xmlns:ns="http://www.tibco.com/schemas/TibcoPractice/SOAP/Service/Schema.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx2="http://add.sayon.com" xmlns:pfx="http://xmlns.example.com/1442560464240">
+    <wsdl:import namespace="http://xmlns.example.com/1442560464240" location="/SOAP/Service/abstractADD.wsdl"/>
+    <wsdl:import namespace="http://add.sayon.com" location="/SOAP and Service/Shared Variables/Service/AddWsdl.wsdl"/>
+    <pd:name>SOAP and Service/Main Process/AddProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx2:addRequest"/>
+    <pd:startX>151</pd:startX>
+    <pd:startY>63</pd:startY>
+    <pd:returnBindings>
+        <pfx2:addRespone>
+            <addResponse>
+                <ns1:addResponse>
+                    <ns1:op>
+                        <xsl:value-of select="$Start/pfx2:addRequest/addRequest/ns1:addRequest/ns1:a + $Start/pfx2:addRequest/addRequest/ns1:addRequest/ns1:b"/>
+                    </ns1:op>
+                </ns1:addResponse>
+            </addResponse>
+        </pfx2:addRespone>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx2:addRespone"/>
+    <pd:endX>449</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1442560879066</pd:targetNamespace>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

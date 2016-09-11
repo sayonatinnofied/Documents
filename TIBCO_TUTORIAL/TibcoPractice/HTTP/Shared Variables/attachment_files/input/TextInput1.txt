@@ -1,0 +1,1 @@
+This is a text-input1 content from text file.

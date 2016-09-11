@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="www.tibco.com/plugin/Sleep" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://www.tibco.com/namespaces/tnt/plugins/file">
+    <pd:name>FTP/Main Process/FTP Put and Get.process</pd:name>
+    <pd:description/>
+    <pd:startName>File Poller</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="File Poller">
+        <pd:type>com.tibco.plugin.file.FileEventSource</pd:type>
+        <pd:resourceType>ae.activities.FileEventSourceResource</pd:resourceType>
+        <pd:x>115</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <fileName>%%TibcoPractice/ftp_put_file%%</fileName>
+            <pollInterval>5</pollInterval>
+            <includeCurrent>true</includeCurrent>
+            <excludeContent>false</excludeContent>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>374</pd:endX>
+    <pd:endY>201</pd:endY>
+    <pd:errorSchemas/>
+    <pd:targetNamespace>http://xmlns.example.com/1438690578072</pd:targetNamespace>
+    <pd:activity name="FTP Put">
+        <pd:type>com.tibco.plugin.ftp.FTPPutActivity</pd:type>
+        <pd:resourceType>ae.activities.FTPPutActivityUI</pd:resourceType>
+        <pd:description/>
+        <pd:x>241</pd:x>
+        <pd:y>73</pd:y>
+        <config>
+            <Timeout>120000</Timeout>
+            <isBinary>false</isBinary>
+            <FireWall>false</FireWall>
+            <useProcessData>true</useProcessData>
+            <Append>false</Append>
+            <compat20>true</compat20>
+            <SharedUserData>/FTP/Shared Variables/Connections/FTP Connection.sharedftp</SharedUserData>
+        </config>
+        <pd:inputBindings>
+            <FTPPutInputDataASCII>
+                <RemoteFileName>
+                    <xsl:value-of select="$File-Poller/pfx:EventSourceOuputTextClass/fileInfo/fileName"/>
+                </RemoteFileName>
+                <Data>
+                    <xsl:value-of select="$File-Poller/pfx:EventSourceOuputTextClass/fileContent/textContent"/>
+                </Data>
+            </FTPPutInputDataASCII>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Sleep">
+        <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+        <pd:resourceType>ae.activities.sleep</pd:resourceType>
+        <pd:description/>
+        <pd:x>373</pd:x>
+        <pd:y>70</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns:SleepInputSchema>
+                <IntervalInMillisec>
+                    <xsl:value-of select="$File-Poller/pfx:EventSourceOuputTextClass/fileInfo/size"/>
+                </IntervalInMillisec>
+            </ns:SleepInputSchema>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FTP Get">
+        <pd:type>com.tibco.plugin.ftp.FTPGetActivity</pd:type>
+        <pd:resourceType>ae.activities.FTPGetActivityUI</pd:resourceType>
+        <pd:description/>
+        <pd:x>137</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <Timeout>120000</Timeout>
+            <isBinary>false</isBinary>
+            <FireWall>false</FireWall>
+            <useProcessData>true</useProcessData>
+            <compat20>true</compat20>
+            <SharedUserData>/FTP/Shared Variables/Connections/FTP Connection.sharedftp</SharedUserData>
+        </config>
+        <pd:inputBindings>
+            <FTPGetInputData>
+                <RemoteFileName>
+                    <xsl:value-of select="$File-Poller/pfx:EventSourceOuputTextClass/fileInfo/fileName"/>
+                </RemoteFileName>
+            </FTPGetInputData>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Write File">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:description/>
+        <pd:x>246</pd:x>
+        <pd:y>204</pd:y>
+        <config>
+            <append>false</append>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <pfx:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/TibcoPractice/ftp_get_file"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="$FTP-Get/FTPGetOutputASCII20/ASCIIData"/>
+                </textContent>
+            </pfx:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>File Poller</pd:from>
+        <pd:to>FTP Put</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FTP Put</pd:from>
+        <pd:to>Sleep</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Sleep</pd:from>
+        <pd:to>FTP Get</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FTP Get</pd:from>
+        <pd:to>Write File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

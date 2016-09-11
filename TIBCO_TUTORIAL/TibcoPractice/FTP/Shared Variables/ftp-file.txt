@@ -1,0 +1,3 @@
+This is a simple text file used by the TIBCO ActiveMatrix BusinessWorks FTP sample
+It will be put on an ftp server and then will be copied back to the 
+local machine.

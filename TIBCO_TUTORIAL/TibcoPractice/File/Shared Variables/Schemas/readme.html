@@ -1,0 +1,141 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Activity Example - File</title>
+</head>
+
+<body bgcolor="#FFFFFF" link="#000080" vlink="#808080"
+background="../../html/background.gif">
+
+<p align="center"><big><em><strong><font face="Arial">Activity Example - File</font></strong></em></big></p>
+
+<p><em><strong><font face="Arial">Example Description</font></strong></em></p>
+
+<blockquote>
+  <p><font face="Arial">The file poller waits for the new_orders_file to be updated. &nbsp;
+  As soon as an update is detected, TIBCO ActiveMatrix BusinessWorks starts a process that creates an empty approval file
+  and then uses the ship_to_address to calculate the shipping costs (by calling a
+  sub-process).&nbsp;<br>
+  The process then waits for the empty approval file to be updated.&nbsp;&nbsp; Finally, a
+  file is written (customer_notification) that gives the customer the relevant shipping
+  information.</font></p>
+  <p><font face="Arial">It is important to note that in an actual system, other tasks (for example, DB
+  query, email acknowledgement etc.) should be used to implement this scenario.&nbsp;
+  However, we have chosen files to highlight the use of the activities in the File Palette.</font></p>
+</blockquote>
+
+<p><font face="Arial"><br>
+<em><strong>Setup</strong></em></font>
+
+<ul><li><font face="Arial">
+	Use TIBCO Designer to create a new project and then import File.zip by selecting Project->Import Full
+	Project.</font></ul>
+
+<ul>
+  <li><font face="Arial">(Optional) Modify the default filenames&nbsp; (if required).<br>
+    By default, the filenames are defined as global variables. If you want to change these
+    defaults, you should:</font></li>
+</ul>
+
+<blockquote>
+  <ol style="font-family: Arial Rounded MT Bold">
+    <li><font face="Arial">Click <em>Edit -&gt; Global Variables</em> to display the list of
+      currently configured global variables.</font></li>
+    <li><font face="Arial">Modify <em>BW_new_order_file</em> to point to the XML file that
+      contains the new order details and triggers the process.&nbsp; The default value is <em>c:\temp\BW_new_order.xml.</em></font></li>
+    <li><font face="Arial">Modify <em>BW_shipping_costs.&nbsp; </em>This file should contain the
+      shipping costs information.&nbsp; The default value is <em>c:\temp\BW_shipping_costs.xml.</em></font></li>
+    <li><font face="Arial">Modify <em>BW_customer_notification.&nbsp; </em>This file will be
+      created by TIBCO ActiveMatrix BusinessWorks to notify the customer of the complete shipping details.&nbsp; The default
+      is <a href="file:///c:/temp/BW_customer_notification.txt"><em>c:\temp\BW_customer_notification.txt.</em></a></font></li>
+    <li><font face="Arial">Modify <em>BW_approval_file.&nbsp; </em>This file will be created by
+      TIBCO ActiveMatrix BusinessWorks and the user should enter the approval status.&nbsp; The default is <em>c:\temp\BW_approval_file.txt.</em></font></li>
+  </ol>
+</blockquote>
+
+<p><font face="Arial"><br>
+<em><strong>Running the example</strong></em></font>
+
+<blockquote>
+
+<ol style="font-family: Arial Rounded MT Bold">
+  <li><font face="Arial">Verify whether the default file names are correct for your system (Refer to
+    the setup section).</font></li>
+  <li><font face="Arial" color="#000000">Open the imported zip file in TIBCO Designer and click on the <em>Process Order</em> </font><font face="Arial">in the Project
+    tree panel (top left)<font color="#000000"> </font></font><font face="Arial"
+    color="#000000">to open Process Definition. </font></li>
+    <li><font face="Arial" color="#000000">(Optional) You may want to turn on the <em>Moving
+	    Ball</em> option which is available in the view-&gt;Test-&gt;Moving Ball
+    menu from the TIBCO Designer.</font></li>
+  <li><font face="Arial" color="#000000">Click on the <em>Start Test Mode</em> icon to run the
+    process in test mode</font></li>
+  <li><font face="Arial" color="#000000">Copy the xml files shipped with this example to the
+    directories listed in the Global Variables.&nbsp; This will trigger the example.</font></li>
+  <li><font face="Arial" color="#000000">You will see that the data travels to the </font><font
+    face="Arial"><em>Wait for Approval File Change</em> task and then will stop.&nbsp; Edit the empty file listed in the Global Variable <em>BW_approval_file</em>
+    and type either <br>
+    <em>&nbsp;&nbsp;&nbsp; approved</em> <br>
+    or <br>
+    <em>&nbsp;&nbsp;&nbsp; delayed<br>
+    </em>Save the file. This should trigger the process to continue.</font></li>
+</ol>
+
+</blockquote>
+
+<p><font face="Arial"><strong>
+<em>Expected Results</em></strong>
+</font></p>
+<blockquote>
+
+<p><font face="Arial">The final result is a BW Approval File that contains
+information similar to the following:
+</font></p>
+
+<p><font face="Arial"><i><u>Approved:</u></i></font></p>
+  <blockquote>
+
+<p><font face="Arial">Hank Hill,<br>
+Your order has been approved<br>
+<br>
+The cost is as follows,<br>
+Purchase cost : $123<br>
+Shipping costs : $40<br>
+Total Cost : $163</font></p>
+  </blockquote>
+
+<p><font face="Arial"><i><u>Delayed:</u></i></font></p>
+  <blockquote>
+
+<p><font face="Arial">Hank Hill,<br>
+Your order has been delayed due to problems<br>
+We will contact you at your Arlen address with further details.<br>
+Regards,<br>
+TIBCO Software Inc.</font></p>
+  </blockquote>
+</blockquote>
+<p><font face="Arial"><br>
+<br>
+<em><strong>Troubleshooting
+</strong></em></font></p>
+<p>&nbsp;&nbsp;&nbsp;<font face="Arial"> <b><u>The process is not being
+triggered</u></b></font></p>
+<blockquote>
+  <ul>
+    <li><font face="Arial">Verify that the Global Variable BW_new_order_file, is
+      referring to a valid xml file.</font></li>
+    <li><font face="Arial">If you have already run the example, then you will
+      need to update the new order xml file as the process will not be triggered
+      again until the file is modified.</font></li>
+  </ul>
+</blockquote>
+
+<p><font face="Arial"> <br>
+&nbsp;&nbsp;&nbsp; If you have any issues when running this example, please contact <br>
+&nbsp;&nbsp;&nbsp; <a href="mailto:support@tibco.com">support@tibco.com</a> including a
+detailed description of the problem.<br>
+<br>
+<br>
+</font></p>
+</body>
+</html>

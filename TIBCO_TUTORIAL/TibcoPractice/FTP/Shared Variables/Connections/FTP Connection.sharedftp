@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>FTP Connection</name>
+    <resourceType>ae.shared.FTPuserChannel</resourceType>
+    <config>
+        <Timeout>60000</Timeout>
+        <Port>21</Port>
+        <Encoding>Cp1252</Encoding>
+        <FireWall>false</FireWall>
+        <Host>10.249.4.141</Host>
+        <UserName>www.sayonftp.com|485867</UserName>
+        <Password>#!0Twx3PQu2UXLxhysY6NwbLqa5wygOOBLGJxiVCKX6ks=</Password>
+        <useSsl>false</useSsl>
+        <ns0:ssl xmlns:ns0="http://www.tibco.com/xmlns/aemeta/services/2002"/>
+    </config>
+</BWSharedResource>

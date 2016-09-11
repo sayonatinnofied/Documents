@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:tns="http://xmlns.example.com/1442916159083/OutboundOperationImpl/SOAP_sp_with_sp_Attachments/Outbound" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.tibco.com/schemas/TibcoPractice/SOAP with Attachments/Outbound/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1442916159083/OutboundOperationImpl/SOAP_sp_with_sp_Attachments/Outbound">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://www.tibco.com/schemas/TibcoPractice/SOAP with Attachments/Outbound/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="partElement" type="xs:float"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="SOAPService">
+        <wsdl:port name="SOAPEventSource" binding="tns:SOAPEventSourceBinding">
+            <soap:address location="http://localhost:8065/SOAP%20with%20Attachments/Outbound/SOAPService"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="OutboundOperation">
+            <wsdl:input message="tns:inputMsg"/>
+            <wsdl:output message="tns:outputMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAPEventSourceBinding" type="tns:PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="OutboundOperation">
+            <soap:operation style="rpc" soapAction="/DEMOSOAP/SOAPOutboundService"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://InputMessageNamespace" parts="filename"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://OutputMessageNamespace" parts="attachment"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="inputMsg">
+        <wsdl:part name="filename" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="outputMsg">
+        <wsdl:part name="attachment" element="ns0:partElement"/>
+    </wsdl:message>
+</wsdl:definitions>

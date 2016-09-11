@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:tns="http://xmlns.example.com/1442651321799" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1442651321799">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ws-i.org/profiles/basic/1.1/xsd" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:simpleType name="swaRef">
+                <xsd:restriction base="xsd:anyURI"/>
+            </xsd:simpleType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:service name="SwAService">
+        <wsdl:port name="swaPortEndpoint1" binding="tns:swaPortEndpoint1Binding">
+            <soap:address location="http://localhost:8065/SOAP%2520with%2520Attachments/Service.serviceagent/swaPortEndpoint1"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="swaPort">
+        <wsdl:operation name="SwAOperation">
+            <wsdl:input message="tns:inputMsg"/>
+            <wsdl:output message="tns:outputMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="swaPortEndpoint1Binding" type="tns:swaPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SwAOperation">
+            <soap:operation style="document" soapAction="/SOAP%2520with%2520Attachments/Service.serviceagent/swaPortEndpoint1/SwAOperation"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="filename"/>
+            </wsdl:input>
+            <wsdl:output>
+                <ns1:multipartRelated xmlns:ns1="http://schemas.xmlsoap.org/wsdl/mime/">
+                    <ns1:part name="dummyName">
+                        <soap:body use="literal" parts="attachment"/>
+                    </ns1:part>
+                    <ns1:part name="dummyName">
+                        <ns1:content part="attachment" type="'image/gif'"/>
+                    </ns1:part>
+                </ns1:multipartRelated>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="inputMsg">
+        <wsdl:part name="filename" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:message name="outputMsg">
+        <wsdl:part name="attachment" type="ns0:swaRef"/>
+    </wsdl:message>
+</wsdl:definitions>

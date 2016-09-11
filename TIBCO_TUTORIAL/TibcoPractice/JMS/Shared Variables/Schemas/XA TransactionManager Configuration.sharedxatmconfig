@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>XA TransactionManager Configuration</name>
+    <resourceType>ae.shared.XATMSharedConfiguration</resourceType>
+    <config>
+        <TransactionTimeout>0</TransactionTimeout>
+        <TMName>TibcoBusinessWorksXATransactionManager</TMName>
+        <TMClass>
+            <className>com.tibco.plugin.transaction.xa.arjuna.ArjunaTransactionManagerWrapper</className>
+        </TMClass>
+        <OptionalTMProperties>
+            <row>
+                <TMPropNameCol>com.tibco.plugin.transaction.transactionManagerName</TMPropNameCol>
+                <TMPropTypeCol>string</TMPropTypeCol>
+                <TMPropValueCol>TIBCO BusinessWorks XA Transaction Manager</TMPropValueCol>
+            </row>
+        </OptionalTMProperties>
+    </config>
+</BWSharedResource>
